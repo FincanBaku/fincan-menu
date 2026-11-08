@@ -14,7 +14,7 @@ window.MENU_CONFIG = {
   hours: "12:00–02:00",
   timezone: "Asia/Baku",    // для статуса «открыто/закрыто»
   tables: 9,                // количество столов (0 — не показывать)
-  instagram: "",            // например "https://instagram.com/fincan"
+  instagram: "https://www.instagram.com/fincan.teahouse",
   whatsapp: "994505738601",
   accentColor: "#f24e1e",
 
