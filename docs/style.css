@@ -135,7 +135,20 @@ footer { padding: 8px 16px calc(40px + env(safe-area-inset-bottom)); }
 .langs button { border: 0; background: none; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 11px; cursor: pointer; }
 .langs button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 
-/* ---------- Instagram / WhatsApp buttons ---------- */
-.social { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
-.chip.soc.ig .chip-ic { color: #d62976; background: color-mix(in srgb, #d62976 13%, transparent); }
-.chip.soc.wa .chip-ic { color: #1fa855; background: color-mix(in srgb, #25d366 16%, transparent); }
+/* ---------- Instagram / WhatsApp tiles ---------- */
+.chip.ig .chip-ic { color: #d62976; background: color-mix(in srgb, #d62976 13%, transparent); }
+.chip.wa .chip-ic { color: #1fa855; background: color-mix(in srgb, #25d366 16%, transparent); }
+.chip small { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+.chip-top { max-width: 100%; }
+.chip-top b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* узкие телефоны (iPhone SE и т.п.): плитки компактнее, чтобы «WhatsApp» и «@fincan.teahouse» помещались целиком */
+@media (max-width: 400px) {
+  .head { padding-left: 12px; padding-right: 12px; }
+  .chips { display: flex; gap: 5px; }
+  .chip { flex: 1 1 auto; padding: 8px 6px; }
+  .chip-top { gap: 4px; }
+  .chip-top b { font-size: 12.5px; }
+  .chip small { font-size: 11px; }
+  .chip-ic { width: 18px; height: 18px; }
+  .chip-ic svg { width: 11px; height: 11px; }
+}
