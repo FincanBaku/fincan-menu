@@ -8,6 +8,9 @@ window.MENU_CONFIG = {
   phone: "050 573 86 01",
   address: "166 Bəşir Səfəroğlu küç., Bakı",
   mapUrl: "https://maps.google.com/?q=40.3746566,49.8388982",
+  // Координаты кафе для карты и маршрутов (Google Maps / Waze).
+  // Узнать: Google Maps → долгое нажатие на точку → скопировать числа.
+  location: { lat: 40.3746566, lng: 49.8388982 },
   hours: "12:00–02:00",
   timezone: "Asia/Baku",    // для статуса «открыто/закрыто»
   tables: 9,                // количество столов (0 — не показывать)
@@ -33,7 +36,9 @@ window.MENU_CONFIG = {
     popular: "⭐ Populyar",
     badgeHit: "🔥 Ən çox sifariş",   // badge = hit
     badgeRec: "⭐ Tövsiyə edirik",    // badge = tovsiye
-    badgeNew: "✨ Yeni"               // badge = yeni
+    badgeNew: "✨ Yeni",              // badge = yeni
+    findUs: "📍 Bizi necə tapmalı",
+    route: "Yol göstər"
   },
 
   // Ссылка на Google Таблицу, опубликованную как CSV
