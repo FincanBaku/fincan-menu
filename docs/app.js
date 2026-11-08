@@ -9,8 +9,7 @@
     tables: "Tables", phone: "Phone", unavailable: "sold out", empty: "Nothing found",
     error: "Menu failed to load", close: "Close", toTop: "Top",
     popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New",
-    findUs: "📍 How to find us", route: "Directions",
-    igFollow: "Follow us", waText: "Message us"
+    findUs: "📍 How to find us", route: "Directions"
   };
   const LS_KEY = "menu-lang";
   let lang = BASE;
@@ -134,20 +133,7 @@
     $("sheet").querySelector(".sheet-close").setAttribute("aria-label", T.close);
     document.querySelectorAll("#langs [data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     renderChips();
-    renderSocial();
     renderFooter();
-  }
-
-  // Кнопки Instagram и WhatsApp в шапке (в стиле плиток)
-  function renderSocial() {
-    const ext = 'target="_blank" rel="noopener noreferrer"';
-    const btn = (cls, href, gc, icon, title, sub) =>
-      `<a class="chip soc ${cls}" href="${esc(href)}" ${ext} data-gc="${gc}"><span class="chip-top"><i class="chip-ic">${svg(icon, 13, 2.4)}</i><b>${esc(title)}</b></span><small>${esc(sub)}</small></a>`;
-    const b = [];
-    if (igUrl()) b.push(btn("ig", igUrl(), "instagram/header", IC_INSTA, "Instagram", T.igFollow));
-    if (C.whatsapp) b.push(btn("wa", `https://wa.me/${C.whatsapp}`, "whatsapp/header", IC_CHAT, "WhatsApp", T.waText));
-    $("social").innerHTML = b.join("");
-    $("social").hidden = !b.length;
   }
 
   // Открыто/закрыто по текущему времени кафе (часы вида "12:00–02:00")
@@ -166,17 +152,22 @@
                 : { open, label: T.closed, sub: T.opensAt.replace("{t}", t(from)) };
   }
   // компактная плашка: [иконка + заголовок] в одну строку, под ней мелкий текст
-  const chip = (cls, icon, title, sub, href) => {
+  // extra — доп. атрибуты ссылки (новая вкладка, событие статистики)
+  const chip = (cls, icon, title, sub, href, extra = "") => {
     const inner = `<span class="chip-top"><i class="chip-ic">${svg(icon, 13, 2.4)}</i><b>${esc(title)}</b></span><small>${esc(sub)}</small>`;
-    return href ? `<a class="chip ${cls}" href="${href}">${inner}</a>` : `<div class="chip ${cls}">${inner}</div>`;
+    return href ? `<a class="chip ${cls}" href="${esc(href)}" ${extra}>${inner}</a>` : `<div class="chip ${cls}">${inner}</div>`;
   };
+  const EXT = 'target="_blank" rel="noopener noreferrer"';
   function renderChips() {
     const chips = [];
     const st = openState();
     if (st) chips.push(chip(st.open ? "is-open" : "is-closed", IC_CLOCK, st.label, st.sub));
     else if (C.hours) chips.push(chip("", IC_CLOCK, T.open, C.hours));
     if (C.tables) chips.push(chip("", IC_TABLE, C.tables, T.tables));
-    if (C.phone) chips.push(chip("", IC_PHONE, T.phone, C.phone, telHref()));
+    // WhatsApp вместо телефона (номер виден под названием); если WhatsApp не задан — обычный телефон
+    if (C.whatsapp) chips.push(chip("wa", IC_CHAT, "WhatsApp", C.phone || "+" + C.whatsapp, `https://wa.me/${C.whatsapp}`, `${EXT} data-gc="whatsapp/header"`));
+    else if (C.phone) chips.push(chip("", IC_PHONE, T.phone, C.phone, telHref()));
+    if (igUrl()) chips.push(chip("ig", IC_INSTA, "Instagram", igName(), igUrl(), `${EXT} data-gc="instagram/header"`));
     $("chips").innerHTML = chips.join("");
   }
   setInterval(renderChips, 60000);

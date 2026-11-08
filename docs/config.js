@@ -13,7 +13,7 @@ window.MENU_CONFIG = {
   location: { lat: 40.3746566, lng: 49.8388982 },
   hours: "12:00–02:00",
   timezone: "Asia/Baku",    // для статуса «открыто/закрыто»
-  tables: 9,                // количество столов (0 — не показывать)
+  tables: 0,                // количество столов в шапке (0 — не показывать)
   instagram: "https://www.instagram.com/fincan.teahouse",
   whatsapp: "994505738601",
   accentColor: "#f24e1e",
@@ -48,9 +48,7 @@ window.MENU_CONFIG = {
       badgeNew: "✨ Yeni",              // badge = yeni
       findUs: "📍 Bizi necə tapmalı",
       route: "Yol göstər",
-      address: "166 Bəşir Səfəroğlu küç., Bakı",
-      igFollow: "Abunə ol",     // кнопки Instagram / WhatsApp в шапке (подписи под названием)
-      waText: "Bizə yazın"
+      address: "166 Bəşir Səfəroğlu küç., Bakı"
     },
     ru: {
       search: "Поиск…",
@@ -71,9 +69,7 @@ window.MENU_CONFIG = {
       badgeNew: "✨ Новинка",
       findUs: "📍 Как нас найти",
       route: "Маршрут",
-      address: "ул. Бешир Сафароглу, 166, Баку",
-      igFollow: "Подписаться",
-      waText: "Написать нам"
+      address: "ул. Бешир Сафароглу, 166, Баку"
     },
     en: {
       search: "Search…",
@@ -94,9 +90,7 @@ window.MENU_CONFIG = {
       badgeNew: "✨ New",
       findUs: "📍 How to find us",
       route: "Directions",
-      address: "166 Bashir Safaroglu St., Baku",
-      igFollow: "Follow us",
-      waText: "Message us"
+      address: "166 Bashir Safaroglu St., Baku"
     }
   },
 
