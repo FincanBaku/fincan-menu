@@ -1,12 +1,12 @@
 category,name,description,price,photo,available
 QƏLYANLAR,Sadə Qəlyan,,13,img/p227.jpg,yes
-QƏLYANLAR,Premium Qəlyan,,18,,yes
-QƏLYANLAR,Qreyfrut Qəlyan,,18,,yes
-İÇKİLƏR,Kofe,,2,,yes
+QƏLYANLAR,Premium Qəlyan,,18,img/premium-qelyan.jpg,yes
+QƏLYANLAR,Qreyfrut Qəlyan,,18,img/qreyfrut-qelyan.jpg,yes
+İÇKİLƏR,Kofe,,2,img/kofe.jpg,yes
 İÇKİLƏR,Kola/Fanta/Sprite/Fuse tea (0.5 l),,3,img/p231.webp,yes
 İÇKİLƏR,Kola/Fanta/Sprite/Fuse tea (1 l),,4,img/p232.jpg,yes
-İÇKİLƏR,Qazlı/Qazsız su (0.5),,2,,yes
-İÇKİLƏR,Qazlı su (1l),,3,,yes
+İÇKİLƏR,Qazlı/Qazsız su (0.5),,2,img/su-05.jpg,yes
+İÇKİLƏR,Qazlı su (1l),,3,img/su-1l.jpg,yes
 İÇKİLƏR,Limonad (1l),,8,,yes
 İÇKİLƏR,Bizon,,3,img/p236.jpg,yes
 İÇKİLƏR,Red bull,,5,img/p237.jpg,yes
