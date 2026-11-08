@@ -3,13 +3,25 @@
   const T = Object.assign({
     search: "Search…", open: "Open", closed: "Closed", untilTime: "until {t}", opensAt: "opens at {t}",
     tables: "Tables", phone: "Phone", unavailable: "sold out", empty: "Nothing found",
-    loading: "Loading…", error: "Menu failed to load", close: "Close", toTop: "Top"
+    loading: "Loading…", error: "Menu failed to load", close: "Close", toTop: "Top",
+    popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New"
   }, C.texts);
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const safeUrl = (u) => (/^(https?:\/\/|img\/)/i.test(u || "") ? u : "");
   const isOff = (v) => /^(no|нет|yox|0|false|-)$/i.test(v || "");
   const fmtPrice = (p) => { const n = Number(String(p).replace(",", ".")); return isNaN(n) ? p : n.toFixed(2); };
+  // Метка из колонки badge → hit | rec | new | "" (любой другой текст игнорируется)
+  function badgeType(v) {
+    const s = String(v || "").trim().toLocaleLowerCase();
+    if (!s) return "";
+    if (/^(hit|хит|top|populyar|ən çox|en cox|bestseller)/.test(s)) return "hit";
+    if (/^(t[oö]vsiy|rec|рекоменд)/.test(s)) return "rec";
+    if (/^(yeni|new|новинк|нов)/.test(s)) return "new";
+    return "";
+  }
+  const BADGE_TEXT = { hit: () => T.badgeHit, rec: () => T.badgeRec, new: () => T.badgeNew };
+  const tagHtml = (it) => { const b = badgeType(it.badge); return b ? `<span class="tag tag-${b}">${esc(BADGE_TEXT[b]())}</span>` : ""; };
 
   /* ---------- Header ---------- */
   document.documentElement.style.setProperty("--accent", C.accentColor || "#f24e1e");
@@ -69,7 +81,8 @@
       } else cell += ch;
     }
     if (cell || row.length) { row.push(cell); rows.push(row); }
-    const head = (rows.shift() || []).map((h) => h.trim().toLowerCase());
+    // названия колонок без учёта регистра и пробелов; лишние колонки просто не используются
+    const head = (rows.shift() || []).map((h) => h.trim().toLowerCase().replace(/\s+/g, ""));
     return rows.filter((r) => r.some((c) => c.trim()))
       .map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
   }
@@ -80,14 +93,14 @@
   const letter = (it) => esc((it.name || "?").trim().charAt(0).toUpperCase());
   const priceTxt = (it) => (it.price ? `${esc(fmtPrice(it.price))} ${esc(C.currency || "")}` : "");
 
-  function card(it, idx) {
+  function card(it, idx, mini) {
     it.photo = safeUrl(it.photo);
     const off = isOff(it.available);
     const ph = it.photo ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}" loading="lazy" decoding="async">` : letter(it);
-    return `<button type="button" class="item${off ? " off" : ""}" data-i="${idx}" data-search="${esc((it.name + " " + (it.description || "")).toLocaleLowerCase())}">
-      <div class="ph">${ph}</div>
+    return `<button type="button" class="item${mini ? " mini" : ""}${off ? " off" : ""}" data-i="${idx}" data-search="${esc((it.name + " " + (it.description || "")).toLocaleLowerCase())}">
+      <div class="ph">${ph}${tagHtml(it)}</div>
       <h3>${nameHtml(it)}</h3>
-      ${it.description ? `<p>${esc(it.description)}</p>` : ""}
+      ${it.description && !mini ? `<p>${esc(it.description)}</p>` : ""}
       <div class="price">${priceTxt(it)}${off ? `<span class="badge">${esc(T.unavailable)}</span>` : ""}</div>
     </button>`;
   }
@@ -101,8 +114,17 @@
       groups.get(cat).push(i);
     });
     const cats = [...groups.keys()];
-    $("tabs").innerHTML = cats.map((c, i) => `<a href="#cat-${i}">${esc(c)}</a>`).join("");
-    $("menu").innerHTML = cats.map((c, i) => `
+    // «Populyar»: сначала хиты, потом рекомендуемые, потом новинки (внутри — в порядке меню)
+    const rank = { hit: 0, rec: 1, new: 2 };
+    const pop = items.map((it, i) => [i, badgeType(it.badge)]).filter(([, b]) => b)
+      .sort((a, b) => rank[a[1]] - rank[b[1]] || a[0] - b[0]).map(([i]) => i);
+    const popHtml = pop.length ? `
+      <section id="cat-pop" class="popular"><h2>${esc(T.popular)}</h2>
+        <div class="strip">${pop.map((idx) => card(items[idx], idx, true)).join("")}</div>
+      </section>` : "";
+    $("tabs").innerHTML = (pop.length ? `<a href="#cat-pop">${esc(T.popular)}</a>` : "") +
+      cats.map((c, i) => `<a href="#cat-${i}">${esc(c)}</a>`).join("");
+    $("menu").innerHTML = popHtml + cats.map((c, i) => `
       <section id="cat-${i}"><h2>${esc(c)} <small>${groups.get(c).length}</small></h2>
         <div class="grid">${groups.get(c).map((idx) => card(items[idx], idx)).join("")}</div>
       </section>`).join("") + `<p class="status" id="nothing" hidden>${esc(T.empty)}</p>`;
@@ -149,6 +171,7 @@
     const q = e.target.value.trim().toLocaleLowerCase();
     let total = 0;
     document.querySelectorAll("section[id]").forEach((s) => {
+      if (s.classList.contains("popular")) { s.hidden = !!q; return; }  // при поиске ленту прячем
       let any = false;
       s.querySelectorAll(".item").forEach((it) => {
         const ok = !q || it.dataset.search.includes(q);
@@ -164,7 +187,7 @@
     const off = isOff(it.available);
     $("sheetBody").innerHTML = `
       ${it.photo ? `<img class="big" src="${esc(it.photo)}" alt="${esc(it.name)}">` : `<div class="big letter">${letter(it)}</div>`}
-      <h3>${nameHtml(it)}${off ? `<span class="badge">${esc(T.unavailable)}</span>` : ""}</h3>
+      <h3>${nameHtml(it)}${tagHtml(it)}${off ? `<span class="badge">${esc(T.unavailable)}</span>` : ""}</h3>
       ${it.description ? `<p>${esc(it.description)}</p>` : ""}
       ${it.price ? `<div class="price">${priceTxt(it)}</div>` : ""}`;
     $("sheet").hidden = false;
@@ -199,9 +222,17 @@
   const sheet = C.sheetCsvUrl ? load(C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now()) : Promise.reject();
   const local = load("menu.csv");
   sheet.then((items) => local.then((loc) => {
-      // Если в таблице нет фото, берём его из menu.csv в репозитории (по названию)
-      const photos = new Map(loc.filter((i) => i.photo).map((i) => [i.name.trim().toLowerCase(), i.photo]));
-      items.forEach((i) => { if (!i.photo) i.photo = photos.get((i.name || "").trim().toLowerCase()) || ""; });
+      // Дополняем таблицу данными из menu.csv в репозитории (по названию блюда):
+      //  • фото — если ячейка photo пустая;
+      //  • метки — только если в таблице вообще нет колонки badge (если есть — таблица главная).
+      const key = (i) => (i.name || "").trim().toLowerCase();
+      const byName = new Map(loc.map((i) => [key(i), i]));
+      const sheetHasBadge = "badge" in items[0];
+      items.forEach((i) => {
+        const l = byName.get(key(i)) || {};
+        if (!i.photo) i.photo = l.photo || "";
+        if (!sheetHasBadge) i.badge = l.badge || "";
+      });
       return items;
     }, () => items), () => local)
     .then(render)
