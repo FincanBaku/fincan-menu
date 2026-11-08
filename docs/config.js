@@ -28,6 +28,7 @@ window.MENU_CONFIG = {
 
   // Ссылка на Google Таблицу, опубликованную как CSV
   // (Файл → Поделиться → Опубликовать в интернете → CSV).
-  // Если пусто — берётся локальный файл menu.csv.
-  sheetCsvUrl: ""
+  // Если пусто или таблица недоступна — берётся локальный файл menu.csv.
+  // Таблица: https://docs.google.com/spreadsheets/d/1Y28fSl8JFw06vk7G9p_6o93zfG2U2wvDTnxKA5BIVyk/edit
+  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1Y28fSl8JFw06vk7G9p_6o93zfG2U2wvDTnxKA5BIVyk/gviz/tq?tqx=out:csv&headers=1"
 };

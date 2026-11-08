@@ -123,8 +123,10 @@
   if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" target="_blank">WhatsApp</a>`);
   $("footer").innerHTML = f.join("<br>");
 
-  const url = C.sheetCsvUrl ? C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now() : "menu.csv";
-  fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
-    .then((t) => render(parseCSV(t)))
+  const load = (url) => fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
+    .then((t) => { const items = parseCSV(t); if (!items.length || !("name" in items[0])) throw 0; return items; });
+  const sheet = C.sheetCsvUrl ? load(C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now()) : Promise.reject();
+  sheet.catch(() => load("menu.csv"))
+    .then(render)
     .catch(() => { $("menu").innerHTML = `<p class="status">${esc(T.error)}</p>`; });
 })();
