@@ -1,7 +1,23 @@
 category,name,description,price,photo,available
+QƏLYAN SETLƏRİ,Qəlyan Quru meyvə seti,"Qəlyan, Çay, quru meyvələr",22,img/p614.jpg,yes
+QƏLYAN SETLƏRİ,Qəlyan Qarışıq çərəz seti,"Qəlyan, çay, qarışıq çərəzlər",25,img/p615.jpg,yes
+QƏLYAN SETLƏRİ,Sadə Set (17:00-dək),Çay və qəlyan,13,img/p250.jpg,yes
+QƏLYAN SETLƏRİ,Klassik Set,"Çay, Qəlyan, Şirniyyat",16,img/p251.jpg,yes
+QƏLYAN SETLƏRİ,Premium Set,"Çay, Qəlyan, Şirniyyatlar, Şokolad, Mürəbbə",22,img/p252.jpg,yes
+QƏLYAN SETLƏRİ,Fincan Set,"2 qəlyan, limitsiz çay, şirniyyat, mürəbbə, şokolad, xurma və rulet",39,img/p253.jpg,yes
+ÇAY SETLƏRİ,Çay + Şokolad,,8,img/p240.jpg,yes
+ÇAY SETLƏRİ,Çay + Rulet,,7,img/p241.jpg,yes
+ÇAY SETLƏRİ,Çay + Xurma,,9,img/p242.jpg,yes
+ÇAY SETLƏRİ,Çay + Mürəbbə,,10,img/p243.jpg,yes
+ÇAY SETLƏRİ,Çay + Limonlu piroq,,10,img/p244.jpg,yes
+ÇAY SETLƏRİ,Çərəz seti,Çay və ləpə,10,img/p601.jpg,yes
+ÇAY SETLƏRİ,Meyvə seti,Çay və quru meyvələr,12,img/p611.jpg,yes
+ÇAY SETLƏRİ,Qarışıq set,"Çay, quru meyvələr və çərəzlər",14,img/p612.jpg,yes
 QƏLYANLAR,Sadə Qəlyan,,13,img/p227.jpg,yes
 QƏLYANLAR,Premium Qəlyan,,18,img/premium-qelyan.jpg,yes
 QƏLYANLAR,Qreyfrut Qəlyan,,18,img/qreyfrut-qelyan.jpg,yes
+İÇKİLƏR,Çay (fincanda),,1,img/p238.jpg,yes
+İÇKİLƏR,Çay (çaynik),,4,img/p239.jpg,yes
 İÇKİLƏR,Kofe,,2,img/kofe.jpg,yes
 İÇKİLƏR,Kola/Fanta/Sprite/Fuse tea (0.5 l),,3,img/p231.webp,yes
 İÇKİLƏR,Kola/Fanta/Sprite/Fuse tea (1 l),,4,img/p232.jpg,yes
@@ -9,36 +25,17 @@ QƏLYANLAR,Qreyfrut Qəlyan,,18,img/qreyfrut-qelyan.jpg,yes
 İÇKİLƏR,Qazlı su (1l),,3,img/su-1l.jpg,yes
 İÇKİLƏR,Limonad (1l),,8,img/limonad.jpg,yes
 İÇKİLƏR,Bizon,,3,img/p236.jpg,yes
-İÇKİLƏR,Red bull,,5,img/p237.jpg,yes
-ÇAY SETLƏRİ,Çay (fincanda),,1,img/p238.jpg,yes
-ÇAY SETLƏRİ,Çay (çaynik),,4,img/p239.jpg,yes
-ÇAY SETLƏRİ,Çay + Şokolad,,8,img/p240.jpg,yes
-ÇAY SETLƏRİ,Çay + Rulet,,7,img/p241.jpg,yes
-ÇAY SETLƏRİ,Çay + Xurma,,9,img/p242.jpg,yes
-ÇAY SETLƏRİ,Çay + Mürəbbə,,10,img/p243.jpg,yes
-ÇAY SETLƏRİ,Çay + Limonlu piroq,,10,img/p244.jpg,yes
+İÇKİLƏR,Red bull,,5,img/redbull.jpg,yes
 SNACKLƏR,Cips (lays),,4,img/cips.jpg,yes
 SNACKLƏR,Araxis,,3,img/araxis.jpg,yes
 SNACKLƏR,Tum,,2,img/tum.jpg,yes
 SNACKLƏR,Kraks,,1.5,img/kraks.jpg,yes
 SNACKLƏR,Suxari,,2,img/suxari.jpg,yes
-SETLƏR,Çərəz seti,Çay və ləpə,10,img/p601.jpg,yes
-SETLƏR,Meyvə seti,Çay və quru meyvələr,12,img/p611.jpg,yes
-SETLƏR,Qarışıq set,"Çay, quru meyvələr və çərəzlər",14,img/p612.jpg,yes
-SETLƏR,Qəlyan Çərəz seti,"Çay, Qəlyan və çərəz",20,img/p613.jpg,yes
-SETLƏR,Qəlyan Quru meyvə seti,"Qəlyan, Çay, quru meyvələr",22,img/p614.jpg,yes
-SETLƏR,Qəlyan Qarışıq çərəz seti,"Qəlyan, çay, qarışıq çərəzlər",25,img/p615.jpg,yes
-SETLƏR,Sadə Set (17:00-dək),Çay və qəlyan,13,img/p250.jpg,yes
-SETLƏR,Klassik Set,"Çay, Qəlyan, Şirniyyat",16,img/p251.jpg,yes
-SETLƏR,Premium Set,"Çay, Qəlyan, Şirniyyatlar, Şokolad, Mürəbbə",22,img/p252.jpg,yes
-SETLƏR,Fincan Set,"2 qəlyan, limitsiz çay, şirniyyat, mürəbbə, şokolad, xurma və rulet",39,img/p253.jpg,yes
 ŞİRNİYYATLAR,Şokolad,,4,img/p616.jpg,yes
 ŞİRNİYYATLAR,Şirniyyatlar,,3,img/p617.jpg,yes
 ŞİRNİYYATLAR,Limonlu piroq,,4,img/p618.jpg,yes
 ŞİRNİYYATLAR,Snikers,,4,img/p619.jpg,yes
-ŞİRNİYYATLAR,Çərəz dəsti,,6,img/p620.jpg,yes
 ŞİRNİYYATLAR,Quru Meyvə dəsti,Quru Meyvələr,8,img/p621.jpg,yes
-ŞİRNİYYATLAR,Qarışıq çərəz dəsti,Qarışıq çərəz dəsti: quru meyvələr və çərəzlər,10,img/p622.jpg,yes
 ŞİRNİYYATLAR,Mürəbbə,,6,img/p623.jpg,yes
 ŞİRNİYYATLAR,Rulet,,4,img/p624.jpg,yes
 ŞİRNİYYATLAR,Xurma,Mədinə xurması,5,img/p625.jpg,yes
