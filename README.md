@@ -1,8 +1,8 @@
 # Бесплатное QR-меню для кафе / ресторана
 
-A simple menu site, like a paid QR menu but free:
-- **Hosting:** GitHub Pages (0 ₼)
-- **Editing the menu:** a Google Sheet (0 ₼). Change a price there and the site updates within a few minutes.
+Простой сайт-меню, как платные QR-меню, но бесплатно:
+- **Хостинг:** GitHub Pages (0 ₼)
+- **Редактирование меню:** Google Таблица (0 ₼). Поменяли цену в таблице — через несколько минут она обновилась на сайте.
 
 Сайт лежит в папке [`docs/`](docs).
 
