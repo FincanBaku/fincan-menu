@@ -1,20 +1,30 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="az">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Меню</title>
+  <title>Menyu</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="hero">
-    <img id="logo" class="logo" alt="" hidden>
-    <h1 id="cafeName">Меню</h1>
-    <p id="subtitle"></p>
-    <input id="search" type="search" placeholder="Поиск блюда…" autocomplete="off">
+  <header class="head">
+    <div class="brand">
+      <img id="logo" class="logo" alt="" hidden>
+      <div>
+        <h1 id="cafeName"></h1>
+        <p id="subtitle"></p>
+      </div>
+    </div>
+    <div id="chips" class="chips"></div>
   </header>
-  <nav id="tabs" class="tabs"></nav>
-  <main id="menu"><p class="status">Загрузка меню…</p></main>
+  <nav class="tabs-wrap">
+    <button id="searchBtn" class="search-btn" aria-label="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
+    <input id="search" type="search" autocomplete="off" hidden>
+    <div id="tabs" class="tabs"></div>
+  </nav>
+  <main id="menu"></main>
   <footer id="footer"></footer>
   <script src="config.js"></script>
   <script src="app.js"></script>
