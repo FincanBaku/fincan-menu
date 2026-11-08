@@ -126,7 +126,13 @@
   const load = (url) => fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
     .then((t) => { const items = parseCSV(t); if (!items.length || !("name" in items[0])) throw 0; return items; });
   const sheet = C.sheetCsvUrl ? load(C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now()) : Promise.reject();
-  sheet.catch(() => load("menu.csv"))
+  const local = load("menu.csv");
+  sheet.then((items) => local.then((loc) => {
+      // Если в таблице нет фото, берём его из menu.csv в репозитории (по названию)
+      const photos = new Map(loc.filter((i) => i.photo).map((i) => [i.name.trim().toLowerCase(), i.photo]));
+      items.forEach((i) => { if (!i.photo) i.photo = photos.get((i.name || "").trim().toLowerCase()) || ""; });
+      return items;
+    }, () => items), () => local)
     .then(render)
     .catch(() => { $("menu").innerHTML = `<p class="status">${esc(T.error)}</p>`; });
 })();
