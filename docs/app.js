@@ -59,13 +59,18 @@
     return open ? { open, label: T.open, sub: T.untilTime.replace("{t}", t(to)) }
                 : { open, label: T.closed, sub: T.opensAt.replace("{t}", t(from)) };
   }
+  // Иконки для плашек в шапке (часы / стол / телефон)
+  const chipIc = (p) => `<i class="chip-ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${p}</svg></i>`;
+  const IC_CLOCK = '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>';
+  const IC_TABLE = '<rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M6 10.5V20M18 10.5V20M9 15h6"/>';
+  const IC_PHONE = '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>';
   function renderChips() {
     const chips = [];
     const st = openState();
-    if (st) chips.push(`<div class="chip ${st.open ? "is-open" : "is-closed"}"><span><span class="dot"></span>${esc(st.label)}</span><small>${esc(st.sub)}</small></div>`);
-    else if (C.hours) chips.push(`<div class="chip">${esc(T.open)}<small>${esc(C.hours)}</small></div>`);
-    if (C.tables) chips.push(`<div class="chip">${esc(C.tables)}<small>${esc(T.tables)}</small></div>`);
-    if (C.phone) chips.push(`<a class="chip" href="tel:${esc(C.phone.replace(/[^\d+]/g, ""))}">${esc(T.phone)}<small>${esc(C.phone)}</small></a>`);
+    if (st) chips.push(`<div class="chip ${st.open ? "is-open" : "is-closed"}">${chipIc(IC_CLOCK)}<span>${esc(st.label)}</span><small>${esc(st.sub)}</small></div>`);
+    else if (C.hours) chips.push(`<div class="chip">${chipIc(IC_CLOCK)}<span>${esc(T.open)}</span><small>${esc(C.hours)}</small></div>`);
+    if (C.tables) chips.push(`<div class="chip">${chipIc(IC_TABLE)}<span>${esc(C.tables)}</span><small>${esc(T.tables)}</small></div>`);
+    if (C.phone) chips.push(`<a class="chip" href="tel:${esc(C.phone.replace(/[^\d+]/g, ""))}">${chipIc(IC_PHONE)}<span>${esc(T.phone)}</span><small>${esc(C.phone)}</small></a>`);
     $("chips").innerHTML = chips.join("");
   }
   renderChips();

@@ -30,9 +30,9 @@ body.lock { overflow: hidden; }
 .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
 .chip { background: var(--card); border-radius: 14px; padding: 10px 6px; text-align: center; font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .chip small { font-weight: 400; color: var(--muted); font-size: 12px; }
-.chip .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
-.chip.is-open { color: var(--green); } .chip.is-open .dot { background: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 25%, transparent); }
-.chip.is-closed { color: var(--red); } .chip.is-closed .dot { background: var(--red); }
+.chip-ic { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 2px; color: var(--accent); background: color-mix(in srgb, var(--accent) 13%, transparent); }
+.chip.is-open { color: var(--green); } .chip.is-open .chip-ic { color: var(--green); background: color-mix(in srgb, var(--green) 15%, transparent); }
+.chip.is-closed { color: var(--red); } .chip.is-closed .chip-ic { color: var(--red); background: color-mix(in srgb, var(--red) 13%, transparent); }
 a.chip:active { transform: scale(.97); }
 
 /* ---------- Tabs ---------- */
