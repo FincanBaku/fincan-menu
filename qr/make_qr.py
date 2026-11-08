@@ -3,7 +3,7 @@ import os, qrcode
 from qrcode.constants import ERROR_CORRECT_H
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
-URL = "https://fincan-menu.github.io/fincan-menu/"
+URL = "https://fincanbaku.github.io/menu/"
 HERE = os.path.dirname(os.path.abspath(__file__))
 LOGO = os.path.join(HERE, "..", "docs", "img", "logo.webp")
 DARK, ACCENT = (26, 58, 48), (242, 78, 30)
