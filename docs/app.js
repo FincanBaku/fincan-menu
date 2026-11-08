@@ -169,7 +169,11 @@
     const f = [];
     if (C.phone) f.push(`<a href="${telHref()}">${ic(IC_PHONE)}${esc(C.phone)}</a>`);
     if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" ${ext}>${ic(IC_CHAT)}WhatsApp</a>`);
-    if (C.instagram) f.push(`<a href="${esc(safeUrl(C.instagram))}" ${ext}>${ic(IC_INSTA)}Instagram</a>`);
+    if (C.instagram) {
+      // подпись: @логин из ссылки (instagram.com/fincan.teahouse → @fincan.teahouse)
+      const user = (String(C.instagram).match(/instagram\.com\/([\w.]+)/i) || [])[1];
+      f.push(`<a href="${esc(safeUrl(C.instagram))}" ${ext}>${ic(IC_INSTA)}${esc(user ? "@" + user : "Instagram")}</a>`);
+    }
     if (address() && !hasLocation()) f.push(`<a href="${esc(safeUrl(C.mapUrl) || "#")}" ${ext}>${ic(IC_PIN)}${esc(address())}</a>`);
     // Карта + маршрут: кнопки открывают приложение и строят путь от текущего места гостя до кафе
     let mapHtml = "";
