@@ -49,8 +49,8 @@ window.MENU_CONFIG = {
       findUs: "📍 Bizi necə tapmalı",
       route: "Yol göstər",
       address: "166 Bəşir Səfəroğlu küç., Bakı",
-      igTitle: "Bizi Instagram-da izləyin",   // плашка Instagram в шапке
-      igFollow: "Abunə ol"
+      igFollow: "Abunə ol",     // кнопки Instagram / WhatsApp в шапке (подписи под названием)
+      waText: "Bizə yazın"
     },
     ru: {
       search: "Поиск…",
@@ -72,8 +72,8 @@ window.MENU_CONFIG = {
       findUs: "📍 Как нас найти",
       route: "Маршрут",
       address: "ул. Бешир Сафароглу, 166, Баку",
-      igTitle: "Мы в Instagram",
-      igFollow: "Подписаться"
+      igFollow: "Подписаться",
+      waText: "Написать нам"
     },
     en: {
       search: "Search…",
@@ -95,8 +95,8 @@ window.MENU_CONFIG = {
       findUs: "📍 How to find us",
       route: "Directions",
       address: "166 Bashir Safaroglu St., Baku",
-      igTitle: "Follow us on Instagram",
-      igFollow: "Follow"
+      igFollow: "Follow us",
+      waText: "Message us"
     }
   },
 
