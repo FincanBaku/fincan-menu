@@ -44,6 +44,7 @@ window.MENU_CONFIG = {
   // Ссылка на Google Таблицу, опубликованную как CSV
   // (Файл → Поделиться → Опубликовать в интернете → CSV).
   // Если пусто или таблица недоступна — берётся локальный файл menu.csv.
-  // Таблица: https://docs.google.com/spreadsheets/d/1y60vCIuNcuwYnO4Q8PF8gTutTf3BiRnemnMVoWmIxTM/edit
-  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1y60vCIuNcuwYnO4Q8PF8gTutTf3BiRnemnMVoWmIxTM/gviz/tq?tqx=out:csv&headers=1"
+  // Таблица: https://docs.google.com/spreadsheets/d/1UCIQTVyImsTUH8Cy_Dgof0mPy0Q8CDmGPFNS2SO8cos/edit
+  // (сайт читает первый лист «Menyu»; лист «Təlimat» — памятка)
+  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1UCIQTVyImsTUH8Cy_Dgof0mPy0Q8CDmGPFNS2SO8cos/gviz/tq?tqx=out:csv&headers=1&sheet=Menyu"
 };
