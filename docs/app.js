@@ -10,7 +10,7 @@
     error: "Menu failed to load", close: "Close", toTop: "Top",
     popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New",
     findUs: "📍 How to find us", route: "Directions",
-    igTitle: "Follow us on Instagram", igFollow: "Follow"
+    igFollow: "Follow us", waText: "Message us"
   };
   const LS_KEY = "menu-lang";
   let lang = BASE;
@@ -134,19 +134,20 @@
     $("sheet").querySelector(".sheet-close").setAttribute("aria-label", T.close);
     document.querySelectorAll("#langs [data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     renderChips();
-    renderInsta();
+    renderSocial();
     renderFooter();
   }
 
-  // Плашка Instagram в шапке — зовёт подписаться
-  function renderInsta() {
-    const a = $("igBanner");
-    if (!igUrl()) { a.hidden = true; return; }
-    a.href = igUrl();
-    a.innerHTML = `<span class="ig-logo">${svg(IC_INSTA, 22, 2)}</span>
-      <span class="ig-text"><b>${esc(T.igTitle)}</b><small>${esc(igName())}</small></span>
-      <span class="ig-btn">${esc(T.igFollow)}</span>`;
-    a.hidden = false;
+  // Кнопки Instagram и WhatsApp в шапке (в стиле плиток)
+  function renderSocial() {
+    const ext = 'target="_blank" rel="noopener noreferrer"';
+    const btn = (cls, href, gc, icon, title, sub) =>
+      `<a class="chip soc ${cls}" href="${esc(href)}" ${ext} data-gc="${gc}"><span class="chip-top"><i class="chip-ic">${svg(icon, 13, 2.4)}</i><b>${esc(title)}</b></span><small>${esc(sub)}</small></a>`;
+    const b = [];
+    if (igUrl()) b.push(btn("ig", igUrl(), "instagram/header", IC_INSTA, "Instagram", T.igFollow));
+    if (C.whatsapp) b.push(btn("wa", `https://wa.me/${C.whatsapp}`, "whatsapp/header", IC_CHAT, "WhatsApp", T.waText));
+    $("social").innerHTML = b.join("");
+    $("social").hidden = !b.length;
   }
 
   // Открыто/закрыто по текущему времени кафе (часы вида "12:00–02:00")
@@ -186,7 +187,7 @@
     const ext = 'target="_blank" rel="noopener noreferrer"';
     const f = [];
     if (C.phone) f.push(`<a href="${telHref()}">${ic(IC_PHONE)}${esc(C.phone)}</a>`);
-    if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" ${ext}>${ic(IC_CHAT)}WhatsApp</a>`);
+    if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" ${ext} data-gc="whatsapp/footer">${ic(IC_CHAT)}WhatsApp</a>`);
     if (igUrl()) f.push(`<a href="${esc(igUrl())}" ${ext} data-gc="instagram/footer">${ic(IC_INSTA)}${esc(igName())}</a>`);
     if (address() && !hasLocation()) f.push(`<a href="${esc(safeUrl(C.mapUrl) || "#")}" ${ext}>${ic(IC_PIN)}${esc(address())}</a>`);
     // Карта + маршрут: кнопки открывают приложение и строят путь от текущего места гостя до кафе
