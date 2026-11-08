@@ -21,6 +21,12 @@ body.lock { overflow: hidden; }
 .brand h1 { margin: 0; font-size: 25px; letter-spacing: -.3px; }
 .brand p { margin: 3px 0 0; color: var(--muted); font-size: 14px; }
 .brand p:empty { display: none; }
+.brand > div { min-width: 0; }
+.find-link { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; margin-top: 5px; padding: 4px 10px 4px 8px; border-radius: 14px; background: var(--card); color: var(--muted); font-size: 13px; text-decoration: none; }
+.find-link svg { flex: none; color: var(--accent); }
+.find-link span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.find-link b { flex: none; color: var(--accent); font-weight: 600; }
+.find-link:active { transform: scale(.97); }
 .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
 .chip { background: var(--card); border-radius: 14px; padding: 10px 6px; text-align: center; font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .chip small { font-weight: 400; color: var(--muted); font-size: 12px; }
@@ -88,7 +94,7 @@ footer { padding: 8px 16px calc(40px + env(safe-area-inset-bottom)); }
 .foot-note { text-align: center; color: var(--muted); font-size: 12px; margin-top: 14px; }
 
 /* карта и маршрут */
-.map-card { margin-bottom: 14px; }
+.map-card { margin-bottom: 14px; scroll-margin-top: 70px; }
 .map-card h2 { margin: 22px 2px 4px; font-size: 19px; }
 .map-addr { margin: 0 2px 12px; color: var(--muted); font-size: 14px; }
 .map-frame { border-radius: var(--radius); overflow: hidden; background: var(--ph); aspect-ratio: 16 / 10; }

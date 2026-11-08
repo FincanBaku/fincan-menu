@@ -29,6 +29,16 @@
   document.title = C.cafeName || "Menu";
   $("cafeName").textContent = C.cafeName || "";
   $("subtitle").textContent = C.subtitle || "";
+  // «Как нас найти» под названием: адрес + ссылка, которая плавно прокручивает к карте внизу
+  if (C.location && isFinite(Number(C.location.lat)) && isFinite(Number(C.location.lng))) {
+    $("findAddr").textContent = C.address || T.findUs;
+    $("findGo").textContent = T.route + " ›";
+    $("findLink").hidden = false;
+    $("findLink").addEventListener("click", (e) => {
+      const t = $("findUs"); if (!t) return;
+      e.preventDefault(); t.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
   if (C.logo) { $("logo").src = C.logo; $("logo").hidden = false; }
   $("search").placeholder = T.search;
   $("searchBtn").setAttribute("aria-label", T.search);
@@ -223,7 +233,7 @@
     const ll = `${lat},${lng}`;
     const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${ll}`;
     const waze = `https://waze.com/ul?ll=${ll}&navigate=yes`;
-    mapHtml = `<div class="map-card">
+    mapHtml = `<div class="map-card" id="findUs">
       <h2>${esc(T.findUs)}</h2>
       ${C.address ? `<p class="map-addr">${esc(C.address)}</p>` : ""}
       <div class="map-frame"><iframe src="https://www.google.com/maps?q=${ll}&z=16&output=embed" title="${esc(T.findUs)}"
