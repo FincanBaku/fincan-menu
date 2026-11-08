@@ -97,8 +97,8 @@ window.MENU_CONFIG = {
   // Ссылка на Google Таблицу в формате CSV.
   // Если пусто, таблица недоступна или отвечает дольше 3.5 с — показывается локальный menu.csv
   // (а когда таблица всё-таки загрузится, меню тихо обновится).
-  // Таблица: https://docs.google.com/spreadsheets/d/1UCIQTVyImsTUH8Cy_Dgof0mPy0Q8CDmGPFNS2SO8cos/edit
-  // (сайт читает лист «Menyu»; лист «Təlimat» — памятка)
-  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1UCIQTVyImsTUH8Cy_Dgof0mPy0Q8CDmGPFNS2SO8cos/gviz/tq?tqx=out:csv&headers=1&sheet=Menyu",
+  // Таблица: https://docs.google.com/spreadsheets/d/12zG4KLU3Nz4eOA85Nh1kl5mBZL65dH-nlhilVnlR158/edit
+  // (сайт читает первый лист таблицы)
+  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/12zG4KLU3Nz4eOA85Nh1kl5mBZL65dH-nlhilVnlR158/gviz/tq?tqx=out:csv&headers=1",
   sheetTimeoutMs: 3500
 };
