@@ -3,7 +3,7 @@
 window.MENU_CONFIG = {
   cafeName: "Fincan Çay Evi",
   subtitle: "",
-  logo: "img/logo.webp",    // путь или ссылка на логотип
+  logo: "img/logo-round.webp",    // путь или ссылка на логотип
   currency: "₼",
   phone: "050 573 86 01",
   address: "166 Bəşir Səfəroğlu küç., Bakı",
@@ -29,12 +29,16 @@ window.MENU_CONFIG = {
     loading: "Yüklənir…",
     error: "Menyu yüklənmədi",
     close: "Bağla",
-    toTop: "Yuxarı"
+    toTop: "Yuxarı",
+    popular: "⭐ Populyar",
+    badgeHit: "🔥 Ən çox sifariş",   // badge = hit
+    badgeRec: "⭐ Tövsiyə edirik",    // badge = tovsiye
+    badgeNew: "✨ Yeni"               // badge = yeni
   },
 
   // Ссылка на Google Таблицу, опубликованную как CSV
   // (Файл → Поделиться → Опубликовать в интернете → CSV).
   // Если пусто или таблица недоступна — берётся локальный файл menu.csv.
-  // Таблица: https://docs.google.com/spreadsheets/d/1qE3-PczhI4EbbBTS2vUWtR8RN3JF6X1x_u75EY4SSh0/edit
-  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1qE3-PczhI4EbbBTS2vUWtR8RN3JF6X1x_u75EY4SSh0/gviz/tq?tqx=out:csv&headers=1"
+  // Таблица: https://docs.google.com/spreadsheets/d/1y60vCIuNcuwYnO4Q8PF8gTutTf3BiRnemnMVoWmIxTM/edit
+  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1y60vCIuNcuwYnO4Q8PF8gTutTf3BiRnemnMVoWmIxTM/gviz/tq?tqx=out:csv&headers=1"
 };
