@@ -40,9 +40,18 @@
   const tr = (it, f) => (lang !== BASE && it[`${f}_${lang}`]) || it[f] || "";
   const hasLocation = () => !!C.location && isFinite(Number(C.location.lat)) && isFinite(Number(C.location.lng)) &&
     !!(Number(C.location.lat) || Number(C.location.lng));
-  // Статистика GoatCounter (если скрипт подключён и не заблокирован)
+  // Статистика GoatCounter (если скрипт подключён и не заблокирован).
+  // Каждое событие (item/…, lang/…) отправляется не больше одного раза за визит (вкладку),
+  // чтобы повторные открытия одного блюда и переключения языка не раздували статистику.
   const track = (path, title) => {
-    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path, title: title || path, event: true }); } catch (e) { /* ignore */ }
+    try {
+      if (!window.goatcounter || !window.goatcounter.count) return;
+      const sent = JSON.parse(sessionStorage.getItem("gc-sent") || "[]");
+      if (sent.includes(path)) return;
+      sent.push(path);
+      sessionStorage.setItem("gc-sent", JSON.stringify(sent));
+      window.goatcounter.count({ path, title: title || path, event: true });
+    } catch (e) { /* ignore */ }
   };
 
   // Метка из колонки badge → hit | rec | new | "" (любой другой текст игнорируется)
@@ -105,7 +114,7 @@
       try { localStorage.setItem(LS_KEY, lang); } catch (err) { /* ignore */ }
       setTexts(); renderTexts();
       if (lastItems) render(lastItems);
-      track(`lang/${lang}`, `Language: ${lang}`);
+      if (lang !== BASE) track(`lang/${lang}`, `Language: ${lang}`);  // возврат на основной язык не считаем
     });
   }
 
