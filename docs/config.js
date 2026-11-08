@@ -9,6 +9,7 @@ window.MENU_CONFIG = {
   address: "166 Bəşir Səfəroğlu küç., Bakı",
   mapUrl: "https://maps.google.com/?q=40.3746566,49.8388982",
   hours: "12:00–02:00",
+  timezone: "Asia/Baku",    // для статуса «открыто/закрыто»
   tables: 9,                // количество столов (0 — не показывать)
   instagram: "",            // например "https://instagram.com/fincan"
   whatsapp: "994505738601",
@@ -18,12 +19,17 @@ window.MENU_CONFIG = {
   texts: {
     search: "Axtar…",
     open: "Açıq",
+    closed: "Bağlı",
+    untilTime: "{t}-dək",       // «до 02:00»
+    opensAt: "{t}-da açılır",   // «откроется в 12:00»
     tables: "Masa sayı",
     phone: "Telefon",
     unavailable: "bitib",
     empty: "Heç nə tapılmadı",
     loading: "Yüklənir…",
-    error: "Menyu yüklənmədi"
+    error: "Menyu yüklənmədi",
+    close: "Bağla",
+    toTop: "Yuxarı"
   },
 
   // Ссылка на Google Таблицу, опубликованную как CSV

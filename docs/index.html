@@ -2,10 +2,12 @@
 <html lang="az">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' https: data:; connect-src 'self' https://docs.google.com https://*.googleusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#ffffff">
   <title>Menyu</title>
+  <link rel="icon" href="img/logo.webp">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,15 +21,30 @@
     </div>
     <div id="chips" class="chips"></div>
   </header>
-  <nav class="tabs-wrap">
-    <button id="searchBtn" class="search-btn" aria-label="search">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+  <nav class="tabs-wrap" id="tabsWrap">
+    <button id="searchBtn" class="icon-btn" aria-label="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     </button>
-    <input id="search" type="search" autocomplete="off" hidden>
+    <input id="search" type="search" autocomplete="off" enterkeyhint="search" hidden>
     <div id="tabs" class="tabs"></div>
   </nav>
   <main id="menu"></main>
   <footer id="footer"></footer>
+
+  <button id="toTop" class="to-top" aria-label="top" hidden>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>
+  </button>
+
+  <div id="sheet" class="sheet" hidden>
+    <div class="sheet-backdrop" data-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true">
+      <button class="sheet-close icon-btn" data-close aria-label="close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <div id="sheetBody"></div>
+    </div>
+  </div>
+
   <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
