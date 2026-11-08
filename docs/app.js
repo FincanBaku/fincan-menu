@@ -9,7 +9,8 @@
     tables: "Tables", phone: "Phone", unavailable: "sold out", empty: "Nothing found",
     error: "Menu failed to load", close: "Close", toTop: "Top",
     popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New",
-    findUs: "📍 How to find us", route: "Directions"
+    findUs: "📍 How to find us", route: "Directions",
+    igTitle: "Follow us on Instagram", igFollow: "Follow"
   };
   const LS_KEY = "menu-lang";
   let lang = BASE;
@@ -89,6 +90,11 @@
   const IC_WAZE = '<path d="M3 11l18-8-8 18-2-8-8-2z"/>';
   const telHref = () => `tel:${esc(String(C.phone).replace(/[^\d+]/g, ""))}`;
   const address = () => T.address || C.address || "";
+  // Instagram: ссылка и подпись «@логин» из неё (instagram.com/fincan.teahouse → @fincan.teahouse)
+  const igUrl = () => safeUrl(C.instagram);
+  const igName = () => { const u = (String(C.instagram || "").match(/instagram\.com\/([\w.]+)/i) || [])[1]; return u ? "@" + u : "Instagram"; };
+  // клики по ссылкам с data-gc (Instagram в шапке и внизу) → событие в статистике
+  document.addEventListener("click", (e) => { const a = e.target.closest("a[data-gc]"); if (a) track(a.dataset.gc); });
 
   /* ---------- Header ---------- */
   document.documentElement.style.setProperty("--accent", C.accentColor || "#f24e1e");
@@ -128,7 +134,19 @@
     $("sheet").querySelector(".sheet-close").setAttribute("aria-label", T.close);
     document.querySelectorAll("#langs [data-lang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
     renderChips();
+    renderInsta();
     renderFooter();
+  }
+
+  // Плашка Instagram в шапке — зовёт подписаться
+  function renderInsta() {
+    const a = $("igBanner");
+    if (!igUrl()) { a.hidden = true; return; }
+    a.href = igUrl();
+    a.innerHTML = `<span class="ig-logo">${svg(IC_INSTA, 22, 2)}</span>
+      <span class="ig-text"><b>${esc(T.igTitle)}</b><small>${esc(igName())}</small></span>
+      <span class="ig-btn">${esc(T.igFollow)}</span>`;
+    a.hidden = false;
   }
 
   // Открыто/закрыто по текущему времени кафе (часы вида "12:00–02:00")
@@ -169,11 +187,7 @@
     const f = [];
     if (C.phone) f.push(`<a href="${telHref()}">${ic(IC_PHONE)}${esc(C.phone)}</a>`);
     if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" ${ext}>${ic(IC_CHAT)}WhatsApp</a>`);
-    if (C.instagram) {
-      // подпись: @логин из ссылки (instagram.com/fincan.teahouse → @fincan.teahouse)
-      const user = (String(C.instagram).match(/instagram\.com\/([\w.]+)/i) || [])[1];
-      f.push(`<a href="${esc(safeUrl(C.instagram))}" ${ext}>${ic(IC_INSTA)}${esc(user ? "@" + user : "Instagram")}</a>`);
-    }
+    if (igUrl()) f.push(`<a href="${esc(igUrl())}" ${ext} data-gc="instagram/footer">${ic(IC_INSTA)}${esc(igName())}</a>`);
     if (address() && !hasLocation()) f.push(`<a href="${esc(safeUrl(C.mapUrl) || "#")}" ${ext}>${ic(IC_PIN)}${esc(address())}</a>`);
     // Карта + маршрут: кнопки открывают приложение и строят путь от текущего места гостя до кафе
     let mapHtml = "";
