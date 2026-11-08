@@ -44,7 +44,10 @@
   const isOff = (v) => /^(no|нет|yox|0|false|-)$/i.test(v || "");
   const fmtPrice = (p) => { const n = Number(String(p).replace(",", ".")); return isNaN(n) ? p : n.toFixed(2); };
 
+  const safeUrl = (u) => (/^(https?:\/\/|img\/)/i.test(u || "") ? u : "");
+
   function card(it) {
+    it.photo = safeUrl(it.photo);
     const ph = it.photo
       ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}" loading="lazy">`
       : esc((it.name || "?").trim().charAt(0).toUpperCase());
@@ -118,9 +121,9 @@
   });
 
   const f = [];
-  if (C.address) f.push(C.mapUrl ? `📍 <a href="${esc(C.mapUrl)}" target="_blank">${esc(C.address)}</a>` : `📍 ${esc(C.address)}`);
-  if (C.instagram) f.push(`<a href="${esc(C.instagram)}" target="_blank">Instagram</a>`);
-  if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" target="_blank">WhatsApp</a>`);
+  if (C.address) f.push(C.mapUrl ? `📍 <a href="${esc(C.mapUrl)}" target="_blank" rel="noopener noreferrer">${esc(C.address)}</a>` : `📍 ${esc(C.address)}`);
+  if (C.instagram) f.push(`<a href="${esc(C.instagram)}" target="_blank" rel="noopener noreferrer">Instagram</a>`);
+  if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`);
   $("footer").innerHTML = f.join("<br>");
 
   const load = (url) => fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
