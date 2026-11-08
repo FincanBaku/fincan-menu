@@ -1,18 +1,34 @@
-// ===== НАСТРОЙКИ МЕНЮ =====
+// ===== MENYU AYARLARI / НАСТРОЙКИ МЕНЮ =====
 // Меняйте только этот файл (и таблицу с блюдами).
 window.MENU_CONFIG = {
-  cafeName: "Моё Кафе",
-  subtitle: "Добро пожаловать! Приятного аппетита",
-  logo: "",                 // ссылка на логотип (необязательно)
-  currency: "₼",            // символ валюты
-  phone: "+994 00 000 00 00",
-  address: "Баку, ул. Примерная, 1",
-  instagram: "",            // например "https://instagram.com/mycafe"
-  whatsapp: "",             // например "994500000000"
-  accentColor: "#c8102e",
+  cafeName: "Fincan Çay Evi",
+  subtitle: "",
+  logo: "img/logo.webp",    // путь или ссылка на логотип
+  currency: "₼",
+  phone: "050 573 86 01",
+  address: "166 Bəşir Səfəroğlu küç., Bakı",
+  mapUrl: "https://maps.google.com/?q=40.3746566,49.8388982",
+  hours: "12:00–02:00",
+  tables: 9,                // количество столов (0 — не показывать)
+  instagram: "",            // например "https://instagram.com/fincan"
+  whatsapp: "994505738601",
+  accentColor: "#f24e1e",
+
+  // Тексты интерфейса (можно перевести на любой язык)
+  texts: {
+    search: "Axtar…",
+    open: "Açıq",
+    tables: "Masa sayı",
+    phone: "Telefon",
+    unavailable: "bitib",
+    empty: "Heç nə tapılmadı",
+    loading: "Yüklənir…",
+    error: "Menyu yüklənmədi"
+  },
 
   // Ссылка на Google Таблицу, опубликованную как CSV
   // (Файл → Поделиться → Опубликовать в интернете → CSV).
-  // Если пусто — берётся локальный файл menu.csv.
-  sheetCsvUrl: ""
+  // Если пусто или таблица недоступна — берётся локальный файл menu.csv.
+  // Таблица: https://docs.google.com/spreadsheets/d/1Y28fSl8JFw06vk7G9p_6o93zfG2U2wvDTnxKA5BIVyk/edit
+  sheetCsvUrl: "https://docs.google.com/spreadsheets/d/1Y28fSl8JFw06vk7G9p_6o93zfG2U2wvDTnxKA5BIVyk/gviz/tq?tqx=out:csv&headers=1"
 };

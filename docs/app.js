@@ -1,13 +1,23 @@
 (function () {
   const C = window.MENU_CONFIG || {};
+  const T = Object.assign({ search: "Search…", open: "Open", tables: "Tables", phone: "Phone",
+    unavailable: "sold out", empty: "Nothing found", loading: "Loading…", error: "Menu failed to load" }, C.texts);
   const $ = (id) => document.getElementById(id);
-  document.documentElement.style.setProperty("--accent", C.accentColor || "#c8102e");
-  document.title = C.cafeName || "Меню";
-  $("cafeName").textContent = C.cafeName || "Меню";
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  document.documentElement.style.setProperty("--accent", C.accentColor || "#f24e1e");
+  document.title = C.cafeName || "Menu";
+  $("cafeName").textContent = C.cafeName || "";
   $("subtitle").textContent = C.subtitle || "";
   if (C.logo) { $("logo").src = C.logo; $("logo").hidden = false; }
+  $("search").placeholder = T.search;
+  $("menu").innerHTML = `<p class="status">${esc(T.loading)}</p>`;
 
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const chips = [];
+  if (C.hours) chips.push(`<div class="chip open">${esc(T.open)}<small>${esc(C.hours)}</small></div>`);
+  if (C.tables) chips.push(`<div class="chip">${esc(C.tables)}<small>${esc(T.tables)}</small></div>`);
+  if (C.phone) chips.push(`<a class="chip" href="tel:${esc(C.phone.replace(/[^\d+]/g, ""))}">${esc(T.phone)}<small>${esc(C.phone)}</small></a>`);
+  $("chips").innerHTML = chips.join("");
 
   // Простой CSV-парсер с поддержкой кавычек
   function parseCSV(text) {
@@ -26,64 +36,77 @@
       } else cell += ch;
     }
     if (cell || row.length) { row.push(cell); rows.push(row); }
-    const head = rows.shift().map((h) => h.trim().toLowerCase());
+    const head = (rows.shift() || []).map((h) => h.trim().toLowerCase());
     return rows.filter((r) => r.some((c) => c.trim()))
       .map((r) => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
   }
 
-  const isOff = (v) => /^(no|нет|0|false|-)$/i.test(v || "");
+  const isOff = (v) => /^(no|нет|yox|0|false|-)$/i.test(v || "");
+  const fmtPrice = (p) => { const n = Number(String(p).replace(",", ".")); return isNaN(n) ? p : n.toFixed(2); };
+
+  function card(it) {
+    const ph = it.photo
+      ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}" loading="lazy">`
+      : esc((it.name || "?").trim().charAt(0).toUpperCase());
+    return `<div class="item${isOff(it.available) ? " off" : ""}" data-off="${esc(T.unavailable)}" data-search="${esc((it.name + " " + (it.description || "")).toLocaleLowerCase())}">
+      <div class="ph">${ph}</div>
+      <h3>${esc(it.name)}</h3>
+      ${it.description ? `<p>${esc(it.description)}</p>` : ""}
+      ${it.price ? `<div class="price">${esc(fmtPrice(it.price))}${esc(C.currency || "")}</div>` : ""}
+    </div>`;
+  }
 
   function render(items) {
     const groups = new Map();
     items.forEach((it) => {
-      const cat = it.category || "Разное";
+      const cat = it.category || "—";
       if (!groups.has(cat)) groups.set(cat, []);
       groups.get(cat).push(it);
     });
     const cats = [...groups.keys()];
     $("tabs").innerHTML = cats.map((c, i) => `<a href="#cat-${i}">${esc(c)}</a>`).join("");
     $("menu").innerHTML = cats.map((c, i) => `
-      <section id="cat-${i}" data-cat="${i}"><h2>${esc(c)}</h2>
-        ${groups.get(c).map((it) => `
-          <div class="item${isOff(it.available) ? " off" : ""}" data-search="${esc((it.name + " " + it.description).toLowerCase())}">
-            ${it.photo ? `<img src="${esc(it.photo)}" alt="${esc(it.name)}" loading="lazy">` : ""}
-            <div class="info">
-              <h3>${esc(it.name)}</h3>
-              ${it.description ? `<p>${esc(it.description)}</p>` : ""}
-              ${it.price ? `<div class="price">${esc(it.price)} ${esc(C.currency || "")}</div>` : ""}
-            </div>
-          </div>`).join("")}
-      </section>`).join("") || `<p class="status">Меню пустое</p>`;
+      <section id="cat-${i}"><h2>${esc(c)}</h2><div class="grid">${groups.get(c).map(card).join("")}</div></section>`).join("")
+      + `<p class="status" id="nothing" hidden>${esc(T.empty)}</p>`;
     setupTabs();
   }
 
+  let updateTabs = () => {};
   function setupTabs() {
     const links = [...document.querySelectorAll(".tabs a")];
     let cur = null;
-    const update = () => {
+    updateTabs = () => {
       const secs = [...document.querySelectorAll("section:not([hidden])")];
       let active = secs[0];
-      secs.forEach((s) => { if (s.getBoundingClientRect().top <= 80) active = s; });
+      secs.forEach((s) => { if (s.getBoundingClientRect().top <= 90) active = s; });
       if (!active || active === cur) return;
       cur = active;
       links.forEach((l) => l.classList.toggle("active", l.getAttribute("href") === "#" + active.id));
       const a = links.find((l) => l.classList.contains("active"));
-      a && a.scrollIntoView({ inline: "center", block: "nearest" });
+      a && a.parentNode.scrollTo({ left: a.offsetLeft - 60, behavior: "smooth" });
     };
-    window.addEventListener("scroll", update, { passive: true });
-    update();
+    window.addEventListener("scroll", updateTabs, { passive: true });
+    updateTabs();
   }
 
+  $("searchBtn").addEventListener("click", () => {
+    const s = $("search"), open = s.hidden;
+    s.hidden = !open; $("tabs").hidden = open;
+    if (open) s.focus(); else { s.value = ""; s.dispatchEvent(new Event("input")); }
+  });
+
   $("search").addEventListener("input", (e) => {
-    const q = e.target.value.trim().toLowerCase();
+    const q = e.target.value.trim().toLocaleLowerCase();
+    let total = 0;
     document.querySelectorAll("section").forEach((s) => {
       let any = false;
       s.querySelectorAll(".item").forEach((it) => {
         const ok = !q || it.dataset.search.includes(q);
-        it.hidden = !ok; any = any || ok;
+        it.hidden = !ok; any = any || ok; total += ok;
       });
       s.hidden = !any;
     });
+    const n = $("nothing"); if (n) n.hidden = total > 0;
   });
 
   $("menu").addEventListener("click", (e) => {
@@ -95,14 +118,15 @@
   });
 
   const f = [];
-  if (C.phone) f.push(`📞 <a href="tel:${esc(C.phone.replace(/\s/g, ""))}">${esc(C.phone)}</a>`);
-  if (C.address) f.push(`📍 ${esc(C.address)}`);
+  if (C.address) f.push(C.mapUrl ? `📍 <a href="${esc(C.mapUrl)}" target="_blank">${esc(C.address)}</a>` : `📍 ${esc(C.address)}`);
   if (C.instagram) f.push(`<a href="${esc(C.instagram)}" target="_blank">Instagram</a>`);
   if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" target="_blank">WhatsApp</a>`);
   $("footer").innerHTML = f.join("<br>");
 
-  const url = C.sheetCsvUrl ? C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now() : "menu.csv";
-  fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
-    .then((t) => render(parseCSV(t)))
-    .catch(() => { $("menu").innerHTML = `<p class="status">Не удалось загрузить меню</p>`; });
+  const load = (url) => fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
+    .then((t) => { const items = parseCSV(t); if (!items.length || !("name" in items[0])) throw 0; return items; });
+  const sheet = C.sheetCsvUrl ? load(C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now()) : Promise.reject();
+  sheet.catch(() => load("menu.csv"))
+    .then(render)
+    .catch(() => { $("menu").innerHTML = `<p class="status">${esc(T.error)}</p>`; });
 })();
