@@ -194,7 +194,7 @@
   $("footer").innerHTML = (f.length ? `<div class="foot-card">${f.join("")}</div>` : "") + `<div class="foot-note">© ${new Date().getFullYear()} ${esc(C.cafeName || "")}</div>`;
 
   /* ---------- Load data ---------- */
-  const load = (url) => fetch(url).then((r) => { if (!r.ok) throw 0; return r.text(); })
+  const load = (url) => fetch(url, { cache: "no-cache" }).then((r) => { if (!r.ok) throw 0; return r.text(); })
     .then((t) => { const items = parseCSV(t); if (!items.length || !("name" in items[0])) throw 0; return items; });
   const sheet = C.sheetCsvUrl ? load(C.sheetCsvUrl + (C.sheetCsvUrl.includes("?") ? "&" : "?") + "t=" + Date.now()) : Promise.reject();
   const local = load("menu.csv");
