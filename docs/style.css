@@ -87,6 +87,21 @@ footer { padding: 8px 16px calc(40px + env(safe-area-inset-bottom)); }
 .foot-card a span.ic { width: 34px; height: 34px; border-radius: 50%; background: var(--bg); display: grid; place-items: center; flex: none; }
 .foot-note { text-align: center; color: var(--muted); font-size: 12px; margin-top: 14px; }
 
+/* карта и маршрут */
+.map-card { margin-bottom: 14px; }
+.map-card h2 { margin: 22px 2px 4px; font-size: 19px; }
+.map-addr { margin: 0 2px 12px; color: var(--muted); font-size: 14px; }
+.map-frame { border-radius: var(--radius); overflow: hidden; background: var(--ph); aspect-ratio: 16 / 10; }
+.map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.route-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.route { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 14px; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; }
+.route small { display: block; font-weight: 400; font-size: 12px; opacity: .9; }
+.route span.ic { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.2); display: grid; place-items: center; flex: none; }
+.route.gmaps { background: #1a73e8; }
+.route.waze { background: #05c8f7; color: #0b1f33; }
+.route.waze span.ic { background: rgba(255,255,255,.45); }
+.route:active { transform: scale(.98); }
+
 /* ---------- Back to top ---------- */
 .to-top { position: fixed; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom)); width: 46px; height: 46px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; display: grid; place-items: center; box-shadow: var(--shadow); cursor: pointer; z-index: 6; }
 

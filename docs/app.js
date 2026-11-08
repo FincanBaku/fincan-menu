@@ -4,7 +4,8 @@
     search: "Search…", open: "Open", closed: "Closed", untilTime: "until {t}", opensAt: "opens at {t}",
     tables: "Tables", phone: "Phone", unavailable: "sold out", empty: "Nothing found",
     loading: "Loading…", error: "Menu failed to load", close: "Close", toTop: "Top",
-    popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New"
+    popular: "⭐ Popular", badgeHit: "🔥 Bestseller", badgeRec: "⭐ Recommended", badgeNew: "✨ New",
+    findUs: "📍 How to find us", route: "Directions"
   }, C.texts);
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -213,8 +214,27 @@
   if (C.phone) f.push(`<a href="tel:${esc(C.phone.replace(/[^\d+]/g, ""))}">${ic('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>')}${esc(C.phone)}</a>`);
   if (C.whatsapp) f.push(`<a href="https://wa.me/${esc(C.whatsapp)}" target="_blank" rel="noopener noreferrer">${ic('<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/>')}WhatsApp</a>`);
   if (C.instagram) f.push(`<a href="${esc(safeUrl(C.instagram))}" target="_blank" rel="noopener noreferrer">${ic('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5"/>')}Instagram</a>`);
-  if (C.address) f.push(`<a href="${esc(safeUrl(C.mapUrl) || "#")}" target="_blank" rel="noopener noreferrer">${ic('<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>')}${esc(C.address)}</a>`);
-  $("footer").innerHTML = (f.length ? `<div class="foot-card">${f.join("")}</div>` : "") + `<div class="foot-note">© ${new Date().getFullYear()} ${esc(C.cafeName || "")}</div>`;
+  const hasMap = C.location && isFinite(Number(C.location.lat)) && isFinite(Number(C.location.lng));
+  if (C.address && !hasMap) f.push(`<a href="${esc(safeUrl(C.mapUrl) || "#")}" target="_blank" rel="noopener noreferrer">${ic('<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>')}${esc(C.address)}</a>`);
+  // Карта + маршрут: кнопки открывают приложение и строят путь от текущего места гостя до кафе
+  let mapHtml = "";
+  const lat = Number(C.location && C.location.lat), lng = Number(C.location && C.location.lng);
+  if (isFinite(lat) && isFinite(lng) && (lat || lng)) {
+    const ll = `${lat},${lng}`;
+    const gmaps = `https://www.google.com/maps/dir/?api=1&destination=${ll}`;
+    const waze = `https://waze.com/ul?ll=${ll}&navigate=yes`;
+    mapHtml = `<div class="map-card">
+      <h2>${esc(T.findUs)}</h2>
+      ${C.address ? `<p class="map-addr">${esc(C.address)}</p>` : ""}
+      <div class="map-frame"><iframe src="https://www.google.com/maps?q=${ll}&z=16&output=embed" title="${esc(T.findUs)}"
+        loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div class="route-btns">
+        <a class="route gmaps" href="${gmaps}" target="_blank" rel="noopener noreferrer">${ic('<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>')}<span>${esc(T.route)}<small>Google Maps</small></span></a>
+        <a class="route waze" href="${waze}" target="_blank" rel="noopener noreferrer">${ic('<path d="M3 11l18-8-8 18-2-8-8-2z"/>')}<span>${esc(T.route)}<small>Waze</small></span></a>
+      </div>
+    </div>`;
+  }
+  $("footer").innerHTML = mapHtml + (f.length ? `<div class="foot-card">${f.join("")}</div>` : "") + `<div class="foot-note">© ${new Date().getFullYear()} ${esc(C.cafeName || "")}</div>`;
 
   /* ---------- Load data ---------- */
   const load = (url) => fetch(url, { cache: "no-cache" }).then((r) => { if (!r.ok) throw 0; return r.text(); })
