@@ -128,3 +128,9 @@ footer { padding: 8px 16px calc(40px + env(safe-area-inset-bottom)); }
 @keyframes fade { from { opacity: 0; } }
 @media (min-width: 700px) { .sheet-panel { bottom: 5vh; border-radius: 24px; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+/* ---------- Language switch ---------- */
+.brand > div:not(.langs) { flex: 1; }
+.langs { flex: none; align-self: flex-start; display: flex; gap: 2px; padding: 3px; border-radius: 14px; background: var(--card); }
+.langs button { border: 0; background: none; color: var(--muted); font: inherit; font-size: 12px; font-weight: 700; padding: 6px 8px; border-radius: 11px; cursor: pointer; }
+.langs button[aria-pressed="true"] { background: var(--accent); color: #fff; }
