@@ -10,7 +10,7 @@
 
 ## 1. Google Таблица (ваша «админка»)
 
-> Таблица для Fincan уже создана: https://docs.google.com/spreadsheets/d/1Y28fSl8JFw06vk7G9p_6o93zfG2U2wvDTnxKA5BIVyk/edit
+> Таблица для Fincan уже создана: https://docs.google.com/spreadsheets/d/1qE3-PczhI4EbbBTS2vUWtR8RN3JF6X1x_u75EY4SSh0/edit
 > и подключена в `docs/config.js`. Нужно только открыть доступ: **Настройки доступа → Все, у кого есть ссылка → Читатель**.
 > Если таблица недоступна, сайт показывает меню из `docs/menu.csv`.
 
